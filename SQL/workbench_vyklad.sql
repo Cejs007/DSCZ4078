@@ -71,3 +71,9 @@ IGNORE 1 LINES;
 
 select * from nahodni_lide;
 
+-- přidat novou adresu
+insert into nahodne_adresy(adresa_id, mesto, adresa) values (10, "Třeboň", "Krátká 12");
+-- spletl jsem se -> upravit adresu
+update nahodne_adresy set adresa="Krátká 13" where adresa_id=10;
+delete from nahodne_adresy where adresa_id=10;
+
