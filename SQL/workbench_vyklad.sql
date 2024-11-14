@@ -71,9 +71,21 @@ IGNORE 1 LINES;
 
 select * from nahodni_lide;
 
+-- všechny lidi (sloupce jmeno, prijmeni, vek), křestní obsahuje "a", příjmení končí na "á" a chci seřadit podle věku vzestupně
+select jmeno, prijmeni, vek 
+from nahodni_lide 
+where jmeno like "%a%" and prijmeni like "%á"
+order by vek;
+
+
+select prijmeni from nahodni_lide where vek < 18;
+
+
 -- přidat novou adresu
 insert into nahodne_adresy(adresa_id, mesto, adresa) values (10, "Třeboň", "Krátká 12");
 -- spletl jsem se -> upravit adresu
 update nahodne_adresy set adresa="Krátká 13" where adresa_id=10;
 delete from nahodne_adresy where adresa_id=10;
+
+
 
