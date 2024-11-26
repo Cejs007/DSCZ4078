@@ -38,6 +38,6 @@ sql = "select * from nahodni_lide;"
 
 # %%
 tabulka = pd.read_sql(sql, mysql_db)
-tabulka
+print(tabulka)
 
 
