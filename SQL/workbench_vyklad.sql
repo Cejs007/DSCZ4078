@@ -87,5 +87,19 @@ insert into nahodne_adresy(adresa_id, mesto, adresa) values (10, "Třeboň", "Kr
 update nahodne_adresy set adresa="Krátká 13" where adresa_id=10;
 delete from nahodne_adresy where adresa_id=10;
 
+GRANT CREATE ON car_rental TO richard;
+REVOKE create ON car_rental FROM richard;
+
+select nahodni_lide.prijmeni, nahodne_adresy.mesto FROM nahodni_lide, nahodne_adresy;
+
+SELECT nahodni_lide.rodne_cislo, nahodne_adresy.adresa
+FROM nahodni_lide
+INNER JOIN nahodne_adresy ON
+nahodni_lide.adresa_id=nahodne_adresy.adresa_id;
+-- python for reference: 'lidi_df.merge(adresy_df, left_on="adresa_id", right_on="adresa_id")'
+
+
+
+
 
 

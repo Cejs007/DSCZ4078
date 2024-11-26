@@ -144,5 +144,76 @@ clients.client_id=bookings.client_id
 where bookings.start_date > "2020-07-12" and bookings.start_date < "2020-07-20" and cars.horse_power < 121
 order by bookings.total_amount;
 
+-- List the number of cars with a daily rental cost of 300 or more, grouping cars by
+-- engine power and sorting from the smallest to the largest.
+select horse_power, count(car_id) as pocet_aut
+from cars
+where price_per_day >= 300
+group by horse_power
+order by horse_power asc;
 
+-- List the total cost of all bookings that were made between July 14 and 18, 2020.
+select sum(total_amount) as total_bookings
+from bookings
+where start_date >= "2020-07-14" and end_date <= "2020-07-18";
+
+-- List (all with a single query):
+-- a. average amount spent by each customer
+-- • column name: Average_reservations_price
+-- b. the number of cars rented for each customer, taking into account only those
+-- customers who rented at least two cars
+-- • column: Number of rented cars
+-- c. customer’s first and last name
+-- • columns: Name, Surname
+-- d. sorting by the highest number of rental cars.
+
+select clients.first_name as Name, clients.last_name as Surname, avg(bookings.total_amount) as Average_reservations_price, count(cars.car_id) as Number_of_rented_cars
+from bookings
+left join cars on
+bookings.car_id=cars.car_id
+left join clients on
+bookings.client_id=clients.client_id
+group by clients.client_id
+having Number_of_rented_cars >= 2
+order by Number_of_rented_cars desc;
+
+-- výklad group by a agregace
+SELECT avg(horse_power) AS prumerny_vykon
+FROM cars;
+
+select year, avg(price_per_day)
+from cars
+group by year
+order by avg(price_per_day) desc;
+
+insert into clients(first_name, last_name, address, city) values ('John', 'Smith', 'os. Street 12', 'Poznan');
+insert into clients(first_name, last_name, address, city) values ('John', 'Smith', 'os. Street 113', 'Gdynia');
+
+select * from clients;
+
+select city, count(client_id) as pocet_lidi
+from clients
+where address like "os%"
+group by city
+having pocet_lidi = 1
+order by pocet_lidi desc;
+
+-- cte example
+with lide_z_poznane as (
+select * from clients where city = "Poznan"
+)
+select first_name, city, address
+from lide_z_poznane 
+where address like "os%";
+
+SELECT *
+from bookings
+left join cars on
+bookings.car_id=cars.car_id
+left join clients on
+bookings.client_id=clients.client_id
+INTO OUTFILE 'C:/Users/cejs0/PycharmProjects/DSCZ4078/SQL/car_rental.csv'
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n';
 
